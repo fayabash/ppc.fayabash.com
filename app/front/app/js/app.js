@@ -79,7 +79,7 @@ angular.module('app', [
     
     .state("home", {
         url: "/app/accueil",
-        templateUrl: 'partials/home/index.html',
+        templateUrl: 'theme/Front/partials/home/index.html',
         data : { pageTitle: 'Climatec : Accueil' },
         resolve: {
             cakePHP: 'cakePHP',
@@ -96,7 +96,7 @@ angular.module('app', [
 
     .state("partenaires", {
         url: "/app/partenaires",
-        templateUrl: 'partials/partners/index.html',
+        templateUrl: 'theme/Front/partials/partners/index.html',
         data : { pageTitle: 'Climatec : Nos partenaires' },
         resolve: {
             cakePHP: 'cakePHP',
@@ -113,7 +113,7 @@ angular.module('app', [
 
     .state("contact", {
         url: "/app/contact",
-        templateUrl: 'partials/pages/contact.html',
+        templateUrl: 'theme/Front/partials/pages/contact.html',
         data : { pageTitle: 'Climatec : Contact' },
         controller: 'contactCtrl',
         controllerAs: 'controller'
@@ -121,7 +121,7 @@ angular.module('app', [
 
     .state("entreprise", {
         url: "/app/entreprise",
-        templateUrl: 'partials/pages/entreprise.html',
+        templateUrl: 'theme/Front/partials/pages/entreprise.html',
         data : { pageTitle: 'Climatec : Notre Entreprise' },
         controller: 'entrepriseCtrl',
         controllerAs: 'controller'
@@ -129,7 +129,7 @@ angular.module('app', [
 
     .state("works-index", {
         url: "/app/realisations",
-        templateUrl: 'partials/works/index.html',
+        templateUrl: 'theme/Front/partials/works/index.html',
         data : { pageTitle: 'Climatec : La lsite de nos réalisations' },
         resolve: {
             cakePHP: 'cakePHP',
@@ -152,7 +152,7 @@ angular.module('app', [
 
     .state("activities-bytype-climatisation", {
         url: "/app/climatisation",
-        templateUrl: 'partials/activities/bytype.html',
+        templateUrl: 'theme/Front/partials/activities/bytype.html',
         data : { pageTitle: 'Climatec : Domaines d activité' },
         resolve: {
             title: function () {
@@ -169,7 +169,7 @@ angular.module('app', [
 
     .state("activities-bytype-ventilation", {
         url: "/app/ventilation",
-        templateUrl: 'partials/activities/bytype.html',
+        templateUrl: 'theme/Front/partials/activities/bytype.html',
         data : { pageTitle: 'Climatec : Domaines d activité' },
         resolve: {
             title: function () {
@@ -186,7 +186,7 @@ angular.module('app', [
 
     .state("works-view", {
         url: "/app/realisation/:workId/:workTitle",
-        templateUrl: 'partials/works/view.html',
+        templateUrl: 'theme/Front/partials/works/view.html',
         data : { pageTitle: 'Climatec : En détail' },
         resolve: {
             cakePHP: 'cakePHP',
@@ -204,7 +204,7 @@ angular.module('app', [
     
     .state("clients-index", {
         url: "/app/clients",
-        templateUrl: 'partials/customers/index.html',
+        templateUrl: 'theme/Front/partials/customers/index.html',
         data : { pageTitle: 'Climatec : Nos clients' },
         resolve: {
             cakePHP: 'cakePHP',
@@ -216,6 +216,6 @@ angular.module('app', [
         controllerAs: 'controller'
     });
 
-    $urlRouterProvider.otherwise('/app/accueil');
+    //$urlRouterProvider.otherwise('/app/accueil');
 
 }]);

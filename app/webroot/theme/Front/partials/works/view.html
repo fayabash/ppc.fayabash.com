@@ -1,0 +1,70 @@
+<section class="container work-view">
+    
+    <div class="row">
+        
+        <!-- details -->
+        <div class="col-sm-6">
+            <h3>{{data.work.Work.name}}</h3>
+            <p ng-bind-html="data.work.Work.description | nl2br"></p>
+        </div>
+         
+        <!-- images -->
+        <div class="col-sm-6">
+            <img src="{{(data.work.Attachment[0].type == 'image')? data.work.Attachment[0].path : (data.work.Attachment[1].type == 'image')? data.work.Attachment[1].path: ''}}" alt="{{data.work.Work.name}}" class="img-responsive">
+        
+        <div ng-if="data.work.Attachment[0].subtype == 'pdf'">
+            <a href="{{data.work.Attachment[0].path}}">
+                <button class="btn btn-primary">Télécharger le PDF</button>
+            </a>
+        </div>
+        <div ng-if="data.work.Attachment[1].subtype == 'pdf'">
+            <a href="{{data.work.Attachment[1].path}}">
+                <button class="btn btn-primary">Télécharger le PDF</button>
+            </a>
+        </div>
+        
+        </div>
+    </div>
+    
+    <div class="spacer--alpha"></div>
+    
+    <!-- sepcs -->
+    <div class="row">
+        
+        <div class="col-md-6">
+            
+            <div class="row work-view__specs-item">
+                <div class="col-sm-4">Client:</div>
+                <div class="col-sm-8">
+                    <span class="tag" ng-repeat="customer in data.work.Customer">{{customer.name}}</span>
+                </div>
+            </div>
+            
+            <div class="row work-view__specs-item">
+                <div class="col-sm-4">Type de réalisations:</div>
+                <div class="col-sm-8"><span class="tag" ng-repeat="activityType in data.work.ActivityType">{{activityType.name}}</span></div>
+            </div>
+            
+            <div class="row work-view__specs-item">
+                <div class="col-sm-4">Activité:</div>
+                <div class="col-sm-8"><span class="tag" ng-repeat="activity in data.work.Activity">{{activity.name}}</span></div>
+            </div>
+            
+            <div class="row work-view__specs-item">
+                <div class="col-sm-4">Date:</div>
+                <div class="col-sm-8">{{data.work.Work.date | date }}</div>
+            </div>
+            
+            <div class="row work-view__specs-item">
+                <div class="col-sm-4">Montant</div>
+                <div class="col-sm-8">{{data.work.Work.montant}}</div>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+</section>
+
+<!-- works -->
+<section class="bg bg--gray" ng-include="'partials/elements/works-overview.html'"></section>

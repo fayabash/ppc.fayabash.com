@@ -10,9 +10,11 @@
 /tags
 *.mo
 
-# NPM #
-#################################
-/app/front/nodes_modules
+# HTML5 GRUNT NetBeans 2 #
+#########################
+/app/front/nbproject/private/*
+/app/front/node_modules
+/app/front/.sass-cache
 
 # IDE and editor specific files #
 #################################

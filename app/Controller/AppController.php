@@ -30,12 +30,12 @@ class AppController extends Controller {
     public function beforeFilter() {
         parent::beforeFilter();
         // Auth
-        $this->Auth->allow(
+        $this->Auth->allow(array(
                 'display',
                 'json_create_user',
-                'json_index'
-                //,'admin_add','admin_index','admin_edit','admin_delete'
-        );
+                'json_index',
+                //'admin_add','admin_index','admin_edit','admin_delete'
+        ));
         
         if (array_key_exists('admin', $this->request->params)) {
             $this->theme = 'Admin';

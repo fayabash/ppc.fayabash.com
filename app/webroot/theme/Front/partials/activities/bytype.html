@@ -1,0 +1,44 @@
+<section class="container activities">
+    <div class="row">
+        
+        <!--selection-->
+        <div class="col-sm-4 col-md-3 position--relative">
+            <ul>
+                <li><a href="#{{ data.activityType.ActivityType.name | slug }}">{{data.activityType.ActivityType.name}}</a></li>
+                <li ng-repeat="activity in data.activities"><a href="#{{ activity.Activity.name | slug }}">{{activity.Activity.name}}</a></li>
+            </ul>
+        </div>
+        
+        <!-- artcile -->
+        <div class="col-sm-8 col-md-9">
+            
+            <article id="{{ data.activityType.ActivityType.name | slug }}" class="row">
+                <div class="col-lg-6 col-md-8">
+                    <h3>{{data.activityType.ActivityType.name}}</h3>
+                    <h4>{{data.activityType.ActivtiyType.header}}</h4>
+                    <p ng-bind-html="data.activityType.ActivityType.description | nl2br">
+                    </p>
+                </div>
+                <div class="col-lg-6 col-md-4 hidden-sm hidden-xs">
+                    <img class="img-responsive" ng-src="{{data.activityType.Attachment[0].path}}" alt="{{data.activityType.ActivityType.name}}">
+                </div>
+            </article>
+            
+            
+            <article id="{{ activity.Activity.name | slug }}" ng-repeat="activity in data.activities" class="row">
+                
+                <div class="col-sm-12">
+                    <img class="img-responsive" img-resize="{{activity.Attachment[0].path}}" alt="{{activity.Activity.name}}">
+                </div>
+                
+                <div class="col-sm-10 col-sm-offset-1 text-center">
+                    <div class="spacer--alpha"></div>
+                    <h3>{{activity.Activity.name}}</h3>
+                    <h4>{{activity.Activity.header}}</h4>
+                    <p ng-bind-html="activity.Activity.description | nl2br"></p>
+                </div>
+                
+            </article>
+        </div>
+    </div>
+</section>

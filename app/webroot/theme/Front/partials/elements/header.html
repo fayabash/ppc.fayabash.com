@@ -1,0 +1,49 @@
+<header class="top-header bg bg--blue hidden-xs hidden-print">
+    <div class="container">
+        <i class="fa fa-envelope"></i> <a href="mailto:info@climatec-sa.com">&nbsp;info@climatec-sa.com</a>&nbsp;&nbsp;&nbsp;
+        <i class="fa fa-phone"></i> <a href="tel:+41216343791">&nbsp;+41 (0)21 634 37 91</a>
+    </div>
+</header>
+
+<header class="bg navbar navbar-inverse hidden-print" ng-controller="elementsHeaderCtrl">
+    <div class="container">
+        <div class="navbar-header">
+            <button ng-click="navCollapsed = !navCollapsed" type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" ui-sref="home">
+                <img class="hidden-xs" src="img/static/logo.jpg">
+                <img class="visible-xs" src="img/static/logo--124_30.jpg">
+            </a>
+        </div>
+        <div collapse="navCollapsed" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                
+                <li ui-sref-active="active" ng-click="navClick();"><a ui-sref="home">Accueil</a></li>
+                
+                <li ui-sref-active="active" ng-click="navClick();"><a ui-sref="entreprise">Entreprise</a></li>
+                
+                <li class="dropdown" dropdown>
+                    <a role="button" href="#" class="dropdown-toggle" dropdown-toggle data-toggle="dropdown">Domaines d'activité <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li ui-sref-active="active" ng-click="navClick();"><a ui-sref="activities-bytype-climatisation">Climatisation</a></li>
+                        <li ui-sref-active="active" ng-click="navClick();"><a ui-sref="activities-bytype-ventilation">Ventilation</a></li>
+                    </ul>
+                </li>
+                
+                <li ui-sref-active="active" ng-click="navClick();"><a ui-sref="works-index">Réalisations</a></li>
+                
+                <li ui-sref-active="active" ng-click="navClick();"><a ui-sref="clients-index">Clients</a></li>
+                
+                <li class="hidden-sm" ui-sref-active="active" ng-click="navClick();"><a ui-sref="partenaires">Partenaires</a></li>
+                
+                <li ui-sref-active="active" ng-click="navClick();"><a ui-sref="contact">Contact</a></li>
+                
+            </ul>
+        </div><!--/.navbar-collapse -->
+    </div>
+</header>
+
+<div class="visible-print"><img class="hidden-xs" src="img/static/logo.jpg"></div>
