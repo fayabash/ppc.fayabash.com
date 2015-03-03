@@ -1,0 +1,72 @@
+
+<!-- carousel -->
+<section class="no-top-padding" ng-include="'partials/elements/carousel.html'"></section>
+
+<!-- home text -->
+<section class="bg">
+    <div class="container">
+        <div class="row">
+            
+            <div class="col-md-8 col-sm-6 col-xs-6">
+                <h2>Climatec SA</h2>
+                <p>
+                    Nous sommes une entreprise située à Bussigny, spécialisée dans l’installation de systèmes de climatisation et de ventilation sur des projets professionnels de moyenne et grande envergure. C’est avec plaisir que nous vous répondrons en détails à vos demandes.
+                </p>
+            </div>
+            
+            <div class="col-md-3 col-sm-5 col-sm-offset-1 col-xs-6">
+                <img ng-src="http://www.nicoll.fr/assets/images/nicoll_fr/slide_batiment.jpg" class="img-responsive" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- short cuts -->
+<section class="bg bg--blue-light">
+    <div class="container text-center-xs">
+        <div class="row">
+            
+            <div class="col-sm-6 col-border-white">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <a ui-sref="activities-bytype-climatisation">
+                            <img ng-src="img/static/climatisation.png" />
+                        </a>
+                        <div class="spacer--alpha visible-xs"></div>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3>Climatisation</h3>
+                        <p>
+                            Rafraîchir l’air pour une température maîtrisée et un confort optimal
+                        </p>
+                    </div>
+                </div>
+                <div class="spacer--alpha visible-xs"></div>
+            </div>
+            
+            <div class="col-sm-6">
+                <div class="spacer--alpha visible-xs"></div>
+                <div class="row">
+                    <div class="col-sm-3 col-sm-offset-1">
+                        <a ui-sref="activities-bytype-ventilation">
+                            <img ng-src="img/static/ventilation.png" />
+                        </a>
+                        <div class="spacer--alpha visible-xs"></div>
+                    </div>
+                    <div class="col-sm-8">
+                        <h3>Ventilation</h3>
+                        <p>
+                            Renouveler l’air pour une hygiène permanente et un sentiment de bien-être
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- works -->
+<section class="bg bg--gray" ng-include="'partials/elements/works-overview.html'" ></section>
+
+<!-- partners -->
+<section class="bg" ng-include="'partials/elements/partners-overview.html'" ></section>

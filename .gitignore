@@ -10,6 +10,10 @@
 /tags
 *.mo
 
+# NPM #
+#################################
+/app/front/nodes_modules
+
 # IDE and editor specific files #
 #################################
 /nbproject
