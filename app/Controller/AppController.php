@@ -32,7 +32,7 @@ class AppController extends Controller {
         // Auth
         $this->Auth->allow(
                 'display',
-                'json_add',
+                'json_create_user',
                 'json_index'
                 //,'admin_add','admin_index','admin_edit','admin_delete'
         );
