@@ -1,0 +1,66 @@
+/* HEADER MENU
+********************************/
+@media (min-width: 768px){
+    .navbar-nav { float: right; margin-right: -15px; }
+    .navbar-nav>li>a { padding-top: 20px; padding-bottom: 20px; }
+    .navbar-inverse { border-radius: 0px; }
+    
+}
+
+.navbar-inverse .navbar-nav>li>a { color: white; }
+
+/* CAROUSEL
+*********************************/
+.carousel-control.left,
+.carousel-control.right {  background-image: none; }
+
+/* PADDING
+*********************************/
+.row--minipadding .col-xs-1,
+.row--minipadding .col-sm-1,
+.row--minipadding .col-md-1,
+.row--minipadding .col-lg-1,
+.row--minipadding .col-xs-2,
+.row--minipadding .col-sm-2,
+.row--minipadding .col-md-2,
+.row--minipadding .col-lg-2,
+.row--minipadding .col-xs-3,
+.row--minipadding .col-sm-3,
+.row--minipadding .col-md-3,
+.row--minipadding .col-lg-3,
+.row--minipadding .col-xs-4,
+.row--minipadding .col-sm-4,
+.row--minipadding .col-md-4,
+.row--minipadding .col-lg-4,
+.row--minipadding .col-xs-5,
+.row--minipadding .col-sm-5,
+.row--minipadding .col-md-5,
+.row--minipadding .col-lg-5,
+.row--minipadding .col-xs-6,
+.row--minipadding .col-sm-6,
+.row--minipadding .col-md-6,
+.row--minipadding .col-lg-6,
+.row--minipadding .col-xs-7,
+.row--minipadding .col-sm-7,
+.row--minipadding .col-md-7,
+.row--minipadding .col-lg-7,
+.row--minipadding .col-xs-8,
+.row--minipadding .col-sm-8,
+.row--minipadding .col-md-8,
+.row--minipadding .col-lg-8,
+.row--minipadding .col-xs-9,
+.row--minipadding .col-sm-9,
+.row--minipadding .col-md-9,
+.row--minipadding .col-lg-9,
+.row--minipadding .col-xs-10,
+.row--minipadding .col-sm-10,
+.row--minipadding .col-md-10,
+.row--minipadding .col-lg-10,
+.row--minipadding .col-xs-11,
+.row--minipadding .col-sm-11,
+.row--minipadding .col-md-11,
+.row--minipadding .col-lg-11,
+.row--minipadding .col-xs-12,
+.row--minipadding .col-sm-12,
+.row--minipadding .col-md-12,
+.row--minipadding .col-lg-12 { padding: 5px; }

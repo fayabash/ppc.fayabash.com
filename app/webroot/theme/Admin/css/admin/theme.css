@@ -1,0 +1,64 @@
+body{background: #eee url(../../img/admin/layout/sativa.png);}
+html,body{
+    position: relative;
+    height: 100%;
+}
+
+.select .btn-group { width: 100%; }
+
+/* Views
+*************************************/
+table { background: white; }
+
+/* SORT
+*************************************/
+.asc button:after {
+	content: ' ⇣';
+}
+.desc button:after {
+	content: ' ⇡';
+}
+
+/* Menu
+*************************************/
+.navbar { border-radius: 0; }
+
+/* Modal
+*************************************/
+@media (min-width: 1200px) { .modal-dialog{ width: 1170px; } }
+@media (min-width: 992px ) and (max-width: 1199px ) { .modal-dialog{ width: 970px; } }
+
+/* Attachment
+*************************************/
+#fileDropArea,
+#uploadDataArea { height: 136px; }
+#spacerArea{ width: 4%; height: 136px; }
+#fileDrop { border: dashed 2px #CCC; border-radius:25px; background-color: #FEFEFE; float: left; color: #CCC; width: 100%;  height: 100%; }
+#fileDrop p { text-align: center; padding: 20px 0 0 0; font-size: 1.6em; }
+#fileDrop .inputbtn { width : 270px; margin: 0 auto; }
+.metadata-table td { vertical-align: top; }
+.bad-upload-item,
+.upload-item { padding: 10px; margin-bottom: 10px; border: dashed 2px #CCC; border-radius:25px; }
+.bad-upload-item { border: dashed 2px red; background-color: rgba(255,0,0,0.1); }
+
+#attachment-list{ margin-top: 30px; margin-bottom: 30px; }
+.attachment-thumb {  margin: 15px 0 15px 0;  padding: 10px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -ms-border-radius: 5px; -o-border-radius: 5px; border-radius: 5px; background-color: #8099FF; }
+.attachment-thumb.selected_thumb { background-color:  #DB80FF; }
+.attachment-info { height: 90px; margin: 5px auto; text-align: center; word-wrap: break-word; }
+
+/* date
+*************************************/
+.datetime label,
+.time label,
+.date label { display: block; }
+.datetime select.form-control,
+.time select.form-control,
+.date select.form-control { width:auto; display:inline-block;}
+
+/* INPUTS
+*************************************/
+.input { margin-bottom: 20px; }
+
+/* TABLES
+*************************************/
+tr:hover td { background-color: #75b2f7; }
