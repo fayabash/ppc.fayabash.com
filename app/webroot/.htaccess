@@ -3,4 +3,8 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
+
+    # Adds AUTH support to Rest Plugin:
+    RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization},last]
+
 </IfModule>

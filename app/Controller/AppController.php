@@ -3,11 +3,9 @@
 App::uses('Controller', 'Controller');
 
 class AppController extends Controller {
-    
-    public $theme = 'Front'; 
-    
-    public $helpers = array('Markdown', 'Image', 'Embed','HtmlVersion');
-    
+
+    public $theme = 'Front';
+    public $helpers = array('Markdown', 'Image', 'Embed', 'HtmlVersion');
     public $components = array(
         'Session',
         'Auth' => array(
@@ -26,25 +24,27 @@ class AppController extends Controller {
         ),
         'RequestHandler'
     );
-    
+
     public function beforeFilter() {
         parent::beforeFilter();
         // Auth
         $this->Auth->allow(array(
-                'display',
-                'json_create_user',
-                'json_index',
+            'display',
+            'json_create_user',
+            'json_pitches_list',
                 //'admin_add','admin_index','admin_edit','admin_delete'
         ));
-        
+
         if (array_key_exists('admin', $this->request->params)) {
             $this->theme = 'Admin';
-            
+
             // kick them off
-            if($this->Auth->user('role_id') != 1 ){
+            if ($this->Auth->user('role_id') != 1) {
                 $this->Auth->deny();
             }
         }
+        
+        
     }
 
 }

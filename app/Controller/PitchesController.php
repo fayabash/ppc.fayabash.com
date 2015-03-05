@@ -17,7 +17,18 @@ class PitchesController extends AppController {
      * @var array
      */
     public $components = array('Paginator', 'Session');
-
+    
+    public function json_pitches_list(){
+        
+        $pitches = $this->Pitch->find('all');
+        
+        $this->set(array(
+            'header' => $_SERVER['HTTP_AUTHORIZATION'],
+            'pitches' => $pitches,
+            '_serialize' => array('header','pitches')
+        ));
+    }
+    
     /**
      * admin_index method
      *
