@@ -1,6 +1,9 @@
 <!-- header -->
 <div  class="app-header" ng-include="'theme/Front/partials/elements/header.html'"></div>
 
+<!-- growl -->
+<div growl></div>
+
 <div class="app-wrapper" images-loaded="imgLoadedEvents" ui-view autoscroll="true">
     <div class="bg--blue full-stage" ng-show="loading">
         <div class="spinner">

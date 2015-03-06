@@ -75,10 +75,11 @@ module.exports = function (grunt) {
                 },
                 files: {
                     '../webroot/theme/Front/js/vendor.min.js': [
+                        'app/js/vendor/crypto-js/md5.js',
                         'app/js/vendor/angular/angular-1.4.0-beta.1.min.js',
                         //'app/js/vendor/angular/angular-1.3.8.js',
-                        'app/js/vendor/imagesloaded/imagesloaded.pkgd.js',
-                        'app/js/vendor/angular/modules/angular-images-loaded.js',
+                        //'app/js/vendor/imagesloaded/imagesloaded.pkgd.js',
+                        //'app/js/vendor/angular/modules/angular-images-loaded.js',
                         'app/js/vendor/angular/modules/angular-resource.min.js',
                         'app/js/vendor/angular/modules/ui-bootstrap-tpls-0.12.0.min.js',
                         'app/js/vendor/angular/modules/angular-ui-router.min.js',

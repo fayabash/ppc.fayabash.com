@@ -32,9 +32,15 @@ class AppController extends Controller {
             'display',
             'json_create_user',
             'json_pitches_list',
+            'json_login',
+            'json_logout'
                 //'admin_add','admin_index','admin_edit','admin_delete'
         ));
-
+        
+        if ( $this->params['prefix'] == 'json' ){
+            $this->set('_jsonp', true);
+        }
+        
         if (array_key_exists('admin', $this->request->params)) {
             $this->theme = 'Admin';
 

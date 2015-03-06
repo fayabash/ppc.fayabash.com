@@ -17,7 +17,28 @@ class UsersController extends AppController {
      * @var array
      */
     public $components = array('Paginator', 'Session');
-
+    
+    public function json_login(){
+        
+        // https://developer.paypal.com/docs/classic/api/errorcodes/
+        $data = array(
+            
+        );
+        
+        if ($this->request->is('post')) {
+            if ($this->Auth->login()) {
+                return $this->redirect($this->Auth->redirect());
+            } else {
+                $this->Session->setFlash(__('Nom d\'user ou mot de passe invalide, réessayer'));
+            }
+        }
+        
+        $this->set(array(
+            'request' => $this->request->data,
+            '_serialize' => array('request')
+        ));
+    }
+    
     /**
      * admin_index method
      *

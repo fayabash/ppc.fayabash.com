@@ -1,18 +1,18 @@
-angular.module('appDep').controller('contactCtrl', ['$scope','cakePHP','growl', function($scope, cakePHP, growl){
+angular.module('appDep').controller('usersLoginCtrl', ['$scope','cakeQuery','growl', function($scope, cakeQuery, growl){
         
-    $scope.message = {
-        name: 'Votre Nom Complet',
+    $scope.user = {
         email: 'votre@email.com',
+        password: '',
         message: ''
     };
     
-    $scope.sendMessage = function( evt ){
+    $scope.login = function( evt ){
         
-        cakePHP.querypost({
-            controller: 'main',
-            action: 'email'
+        cakeQuery.querypost({
+            controller: 'users',
+            action: 'login'
         },{
-            message : $scope.message
+            User : $scope.user
         }).$promise.then(
             //success
             function( value ){
