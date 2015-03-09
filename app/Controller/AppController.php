@@ -27,7 +27,10 @@ class AppController extends Controller {
 
     public function beforeFilter() {
         parent::beforeFilter();
+        
         // Auth
+        $this->Auth->authorize = array('Controller');
+        
         $this->Auth->allow(array(
             'display',
             'index',
@@ -46,18 +49,27 @@ class AppController extends Controller {
         
         $this->set('is_logged', $this->Auth->user());
         
-        if (array_key_exists('admin', $this->request->params)) {
+        if (array_key_exists('admin', $this->request->params) ) {
             $this->theme = 'Admin';
-
-            // kick them off
-            if ($this->Auth->user('role_id') != 1) {
-                $this->Auth->deny();
-            }
         }
         
-        if( !$this->Auth->isAuthorized() && array_key_exists('json', $this->request->params)){
-            $this->redirect(array('controller' => 'users', 'action' => 'logout', 'json' => TRUE));
+        if( !$this->Auth->isAuthorized() && array_key_exists('admin', $this->request->params) && $this->Auth->user() ){
+            $this->redirect('/');
         }
+        
+        /*
+        if( !$this->Auth->isAuthorized($this->Auth->user(), $this->request) && array_key_exists('json', $this->request->params)){
+            $this->redirect(array('controller' => 'users', 'action' => 'logout', 'json' => TRUE));
+        }*/
+    }
+    
+    public function isAuthorized () {
+        if ( array_key_exists('admin', $this->request->params) ) {
+            return $this->Auth->user('role_id') == 1 ;
+        }else{
+            return $this->Auth->user('role_id') < 3 ;
+        }
+        return parent::isAuthorized () ;
     }
 
 }
