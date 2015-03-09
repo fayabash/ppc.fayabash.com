@@ -152,6 +152,21 @@ class UsersController extends AppController {
                 $control = FALSE;
             }
             
+            if( empty($user['User']['firstname']) ){
+                $this->Session->setFlash('Votre prénom de passe est vide!', 'default', array('class' => 'alert alert-danger'));
+                $control = FALSE;
+            }
+            
+            if( empty($user['User']['lastname']) ){
+                $this->Session->setFlash('Votre nom de passe est vide!', 'default', array('class' => 'alert alert-danger'));
+                $control = FALSE;
+            }
+            
+            if( empty($user['User']['mobile']) ){
+                $this->Session->setFlash('Votre mobile de passe est vide!', 'default', array('class' => 'alert alert-danger'));
+                $control = FALSE;
+            }
+            
             if( $user['User']['password'] != $user['User']['password_confirm'] ){
                 $this->Session->setFlash('Les mots de passe ne correspondes pas!', 'default', array('class' => 'alert alert-danger'));
                 $control = FALSE;
