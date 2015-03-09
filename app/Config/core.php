@@ -149,7 +149,7 @@
  *	`manager_index()` and `/manager/controller/index`
  *
  */
-Configure::write('Routing.prefixes', array('admin','json'));
+Configure::write('Routing.prefixes', array('admin','json','player'));
 
 /**
  * Turn off all caching application-wide.

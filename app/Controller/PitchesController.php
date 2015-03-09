@@ -18,6 +18,66 @@ class PitchesController extends AppController {
      */
     public $components = array('Paginator', 'Session');
     
+    public function sumup(){
+        
+        if ($this->request->is('post')) {
+            $this->Session->write('data', $this->request->data );
+            $this->set('pitch', $this->request->data);
+            $this->set('user', $this->Auth->user());
+        }else{
+            $this->Session->setFlash('Une erreure c\'est produite veuillez réserver à nouveau!', 'default', array('class' => 'alert alert-warning'));
+            return $this->redirect(array('action' => 'index'));
+        }
+    }
+    
+    public function index(){
+        
+        // clean all after 2 days..
+        $this->Pitch->deleteAll(array(
+            'Pitch.end > NOW() + INTERVAL 2 DAY'
+        ));
+        
+        $pitches = $this->Pitch->find('all',array(
+            'conditions' => array(
+                'Pitch.end > NOW()',
+            ),
+            'order' => array(
+                'Pitch.start' => 'ASC',
+                'Pitch.title' => 'ASC',
+                'Pitch.max_user' => 'ASC'
+            )
+        ));
+        
+        
+        $simples = array();
+        $tournaments = array();
+        
+        foreach($pitches as $key => $pitch){
+            if( count($pitch['User']) >= $pitch['Pitch']['max_user'] ){
+                unset($pitches[$key]);
+            }else{
+                $pitch['Pitch']['user_left'] = $pitch['Pitch']['max_user'] - count($pitch['User']);
+                unset($pitch['User']);
+                if( $pitch['Pitch']['max_user'] == 1){
+                    $k = $pitch['Pitch']['start'].'_'.$pitch['Pitch']['end'];
+                    if( !array_key_exists($k, $simples) ){
+                        $simples[$k] = array();
+                    }
+                    array_push($simples[$k], $pitch);
+                    
+                    
+                    
+                }else{
+                    array_push($tournaments, $pitch);
+                }
+            }
+        }
+        
+        $this->set('simples',$simples);
+        $this->set('tournaments',$tournaments);
+    }
+    
+    /*
     public function json_pitches_list(){
         
         $pitches = $this->Pitch->find('all');
@@ -28,6 +88,7 @@ class PitchesController extends AppController {
             '_serialize' => array('header','pitches')
         ));
     }
+    */
     
     /**
      * admin_index method

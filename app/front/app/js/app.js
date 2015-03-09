@@ -82,6 +82,34 @@ angular.module('app', [
         controllerAs: 'controller'
     })
     
+    .state("bookings", {
+        url: "/app/bookings",
+        templateUrl: 'theme/Front/partials/users/bookings.html',
+        data : { pageTitle: 'PPC : Réservations' },
+        resolve: {
+            cakeQuery: 'cakeQuery',
+            data: function (cakeQuery) {
+                return cakeQuery.queryget({controller: 'users', action: 'bookings'}).$promise;
+            }
+        },
+        controller: 'usersBookingsCtrl',
+        controllerAs: 'controller'
+    })
+    
+    .state("logout", {
+        url: "/app/logout",
+        templateUrl: 'theme/Front/partials/users/login.html',
+        data : { pageTitle: 'PPC : Login' },
+        resolve: {
+            cakeQuery: 'cakeQuery',
+            data: function (cakeQuery) {
+                return cakeQuery.queryget({controller: 'users', action: 'logout'}).$promise;
+            }
+        },
+        controller: 'usersLoginCtrl',
+        controllerAs: 'controller'
+    })
+    
     .state("login", {
         url: "/app/login",
         templateUrl: 'theme/Front/partials/users/login.html',

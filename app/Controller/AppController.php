@@ -9,8 +9,8 @@ class AppController extends Controller {
     public $components = array(
         'Session',
         'Auth' => array(
-            'loginRedirect' => array('controller' => 'invitations', 'action' => 'index', 'admin' => true),
-            'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'admin' => false, 'home'),
+            'loginRedirect' => array('controller' => 'users', 'action' => 'bookings', 'player' => true, 'admin' => false),
+            'logoutRedirect' => array('controller' => 'pitches', 'action' => 'index', 'player' => false, 'admin' => false),
             'authenticate' => array(
                 'Form' => array(
                     'fields' => array('username' => 'email')
@@ -30,16 +30,19 @@ class AppController extends Controller {
         // Auth
         $this->Auth->allow(array(
             'display',
-            'json_create_user',
-            'json_pitches_list',
-            'json_login',
-            'json_logout'
+            'index',
+            'view',
+            'add',
+            'sumup',
+            'delete'
                 //'admin_add','admin_index','admin_edit','admin_delete'
         ));
         
+        /*
         if ( $this->params['prefix'] == 'json' ){
             $this->set('_jsonp', true);
         }
+        */
         
         if (array_key_exists('admin', $this->request->params)) {
             $this->theme = 'Admin';
@@ -50,7 +53,9 @@ class AppController extends Controller {
             }
         }
         
-        
+        if( !$this->Auth->isAuthorized() && array_key_exists('json', $this->request->params)){
+            $this->redirect(array('controller' => 'users', 'action' => 'logout', 'json' => TRUE));
+        }
     }
 
 }

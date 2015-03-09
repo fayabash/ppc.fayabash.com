@@ -19,8 +19,6 @@
         
         <?php echo $this->fetch('meta'); ?>
         
-        <title ng-bind="$state.current.data.pageTitle"></title>
-        
         <?php
         
         $this->HtmlVersion->version = '0.0.1';
@@ -29,7 +27,7 @@
 
         echo $this->HtmlVersion->css(array(
             '/theme/Front/css/vendor.min',
-            '/theme/Front/css/app.min'
+            '/theme/Front/css/app'
         ));
 
         echo $this->fetch('css');
@@ -51,7 +49,7 @@
                 </div>
             <![endif]-->
             
-            <div id="content" >
+            <div id="content" class="container" >
                 <?php
                 echo $this->Session->flash(); 
                 echo $this->fetch('content');
@@ -64,7 +62,7 @@
         <?php
         echo $this->Html->script(array(
             'vendor.min',
-            'app.min'
+            'app'
         ));
         ?>
          
@@ -80,7 +78,7 @@
         <?php echo $this->fetch('script'); ?>
         
         <script>
-            var _gaq=[['_setAccount','UA-44952673-24'],['_trackPageview']];
+            var _gaq=[['_setAccount','UA-XXXXXXX'],['_trackPageview']];
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src='//www.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));

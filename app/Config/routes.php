@@ -1,8 +1,8 @@
 <?php
 // to js app...
-Router::connect('/', array('controller' => 'main', 'action' => 'display'));
+Router::connect('/', array('controller' => 'pitches', 'action' => 'index','admin' => FALSE));
 Router::connect('/admin', array('controller' => 'pitches', 'action' => 'index','admin' => TRUE));
-Router::connect('/app/**', array('controller' => 'main', 'action' => 'display'));
+//Router::connect('/app/**', array('controller' => 'main', 'action' => 'display'));
 
 // JSONP app...
 Router::mapResources('main');

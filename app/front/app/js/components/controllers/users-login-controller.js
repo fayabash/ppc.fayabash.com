@@ -1,9 +1,14 @@
-angular.module('appDep').controller('usersLoginCtrl', ['$scope','cakeQuery','growl', function($scope, cakeQuery, growl){
+angular.module('appDep').controller('usersLoginCtrl', ['$scope','$state','cakeQuery','growl', function($scope, $state, cakeQuery, growl){
         
     $scope.user = {
         email: 'votre@email.com',
         password: '',
         message: ''
+    };
+    
+    
+    $scope.displayError = function(){
+        growl.error('Mauvais email/mot de passe');
     };
     
     $scope.login = function( evt ){
@@ -16,11 +21,18 @@ angular.module('appDep').controller('usersLoginCtrl', ['$scope','cakeQuery','gro
         }).$promise.then(
             //success
             function( value ){
-                if( value.success ){
-                    growl.success("Votre message a bien été envoyé!");
-                }else{
-                    growl.error('Une erreure est survenue, veuillez essayer à nouveau!');
-                }
+                
+                if(!value.data)
+                    return $scope.displayError();
+                
+                if(!value.data.state)
+                    return $scope.displayError();
+                
+                if( value.data.state != 'success' )
+                    return $scope.displayError();
+                
+                $state.go('bookings',{});
+               
             },
             //error
             function( error ){
