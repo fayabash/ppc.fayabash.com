@@ -29,15 +29,22 @@ class UsersController extends AppController {
             )
         ));
         
+        $availablePitch = array();
+        
         foreach($pitches as $key => $pitch){
             if( count($pitch['User']) >= $pitch['Pitch']['max_user'] ){
                 unset($pitches[$key]);
+            }else{
+                if(empty($availablePitch)){
+                    $availablePitch = $pitch;
+                }
             }
         }
         
         if( count($pitches) > 0 ){
             
-            $p = $pitches[0]['Pitch'];
+            // ici prob!!
+            $p = $availablePitch['Pitch'];
             
             $user = $this->User->find('first',array(
                 'conditions' => array(
@@ -49,49 +56,50 @@ class UsersController extends AppController {
             
             foreach( $user['Pitch'] as $userKey => &$userPitch ){
                 
-                $up = $userPitch['Pitch'];
+                $up = $userPitch;
                 
-                switch($data['Pitch']['type']){
+                
+                // peux pas se démultiplier! et peux pas jouer pd un tournois
+                $start = strtotime($p['start']);
+                $end = strtotime($p['end']);
 
-                    default:
-                        // peux pas se démultiplier! et peux pas jouer pd un tournois
-                        $start = strtotime($p['start']);
-                        $end = strtotime($p['end']);
-                        
-                        $ustart = strtotime($up['start']);
-                        $uend = strtotime($up['end']);
-                        
-                        if( ($end <= $uend && $ustart >= $start) || ($uend <= $end && $start <= $ustart)){
-                            $this->Session->setFlash('Vous avez déjà une réservation, ou un tournois pour cette tranche horraire', 'default', array('class' => 'alert alert-danger'));
-                            return false;
-                        }
-                        
+                $ustart = strtotime($up['start']);
+                $uend = strtotime($up['end']);
 
-                    case 'pitch':
-                        // pas plus de 2 fois par jour
-                        $udate = date('Y-m-d',strtotime($up['start']));
-                        $udate = strtotime($udate);
-                        
-                        $date = date('Y-m-d',strtotime($p['start']));
-                        $date = strtotime($date); 
-                        
-                        if( $udate == $date ){
-                            $times++;
-                        }
-                        
-                        // pas 2 fois successivement
-                        if( ($p['start'] == $up['end']) || ($p['end'] == $up['start']) ){
-                            $this->Session->setFlash('Vous ne pouvez pas jouer 2 parties successivement!', 'default', array('class' => 'alert alert-danger'));
-                            return false;
-                        }
-                        
-                        break;
-
-                    case 'tournament':
-                        
-                        
-                        break;
+                if( $end <= $uend && $ustart >= $start){
+                    $this->Session->setFlash('Vous avez déjà une réservation, ou un tournoi pour cette tranche horraire', 'default', array('class' => 'alert alert-danger'));
+                    return false;
                 }
+                
+                if( $uend <= $end && $start <= $ustart ) {
+                    $this->Session->setFlash('Vous avez déjà une réservation, ou un tournoi pour cette tranche horraire', 'default', array('class' => 'alert alert-danger'));
+                    return false;
+                }
+
+
+
+                // pas plus de 2 fois par jour
+                $udate = date('Y-m-d',strtotime($up['start']));
+                $udate = strtotime($udate);
+
+                $date = date('Y-m-d',strtotime($p['start']));
+                $date = strtotime($date); 
+
+                if( $udate == $date ){
+                    $times++;
+                }
+
+                // pas 2 fois successivement
+                if( $p['start'] == $up['end'] ){
+                    $this->Session->setFlash('Vous ne pouvez pas jouer 2 parties successivement!', 'default', array('class' => 'alert alert-danger'));
+                    return false;
+                }
+                if( $p['end'] == $up['start'] ){
+                    $this->Session->setFlash('Vous ne pouvez pas jouer 2 parties successivement!', 'default', array('class' => 'alert alert-danger'));
+                    return false;
+                }
+                        
+                       
                 
                 if( $times >= 2 ){
                     $this->Session->setFlash('Vous ne pouvez pas jouer plus de 2 fois par jour!', 'default', array('class' => 'alert alert-danger'));
@@ -99,9 +107,26 @@ class UsersController extends AppController {
                 }
             }
             
+            // add pitch to array!
             array_push($user['Pitch'], $p );
             
-            if( $this->User->saveAssociated($user) ){
+            $newUser = array(
+                'User' => array(
+                    'id' => $user['User']['id']
+                ),
+                'Pitch' => array(
+                    'Pitch' => array()
+                )
+            );
+            
+            // format data for save
+            foreach( $user['Pitch'] as $userKey => $userPitch ){
+               array_push($newUser['Pitch']['Pitch'], $userPitch['id']);
+            }
+            
+            //debug($newUser);
+            
+            if( $this->User->saveAssociated($newUser) ){
                 return TRUE;
             }else{
                 $this->Session->setFlash('Une faute de programmation est survenue! Veuillez essayer à nouveau!', 'default', array('class' => 'alert alert-danger'));
@@ -116,7 +141,84 @@ class UsersController extends AppController {
         return FALSE;
     }
     
+    public function add(){
+        if ($this->request->is('post')) {
+            
+            $control = TRUE;
+            
+            $user = $this->request->data;
+            if( empty($user['User']['password']) ){
+                $this->Session->setFlash('Votre mot de passe est vide!', 'default', array('class' => 'alert alert-danger'));
+                $control = FALSE;
+            }
+            
+            if( $user['User']['password'] != $user['User']['password_confirm'] ){
+                $this->Session->setFlash('Les mots de passe ne correspondes pas!', 'default', array('class' => 'alert alert-danger'));
+                $control = FALSE;
+            }
+            
+            if( strlen($user['User']['password']) < 6 ){
+                $this->Session->setFlash('Votre mots de passe doit contenir au moins 6 caractères!', 'default', array('class' => 'alert alert-danger'));
+                $control = FALSE;
+            }
+            
+            if( strlen($user['User']['username']) < 3 ){
+                $this->Session->setFlash('Votre nom d\'utilisateur est trop court', 'default', array('class' => 'alert alert-danger'));
+                $control = FALSE;
+            }
+            
+            if( strlen($user['User']['username']) > 6 ){
+                $this->Session->setFlash('Votre nom d\'utilisateur est trop long', 'default', array('class' => 'alert alert-danger'));
+                $control = FALSE;
+            }
+            
+            $email = $this->User->find('count',array(
+                'recursive' => -1,
+                'conditions' => array(
+                    'User.email' => $user['User']['email']
+                )
+            ));
+            
+            if( $email > 0 ){
+                $this->Session->setFlash('Cet email existe déjà, veuillez vous logger!', 'default', array('class' => 'alert alert-warning'));
+                $control = FALSE;
+            }
+            
+            $name = $this->User->find('count',array(
+                'recursive' => -1,
+                'conditions' => array(
+                    'User.username' => $user['User']['username']
+                )
+            ));
+            
+            if( $name > 0 ){
+                $this->Session->setFlash('Ce nom d\'utilsateur est déjà pris, veuillez vous en choisir un autre!', 'default', array('class' => 'alert alert-warning'));
+                $control = FALSE;
+            }
+            
+            if( $control ){
+                $user['User']['role_id'] = 2;
+                
+                $this->User->create();
+                if ($this->User->saveAssociated($user)) {
+                    $this->Session->setFlash('Votre inscription a bien été effectuée, bienvenue dans votre espace ping pong club!', 'default', array('class' => 'alert alert-success'));
+                    $user = $this->User->find('first',array(
+                        'conditions' => array(
+                            'User.email' => $user['User']['email']
+                        )
+                    ));
+                    $user['User']['Role'] = $user['Role'];
+                    $this->Auth->login($user['User']);
+                    return $this->redirect(array('action' => 'bookings', 'player' => TRUE));
+                } else {
+                    $this->Session->setFlash('L\'inscription n\'a pu être faite, veuillez controller vos données!', 'default', array('class' => 'alert alert-danger'));
+                }
+            }
+        }
+    }
+    
     public function player_bookings(){
+        
         $data = $this->Session->read('data');
         if( $data ){
             if( $this->_book($data) ){
@@ -126,7 +228,7 @@ class UsersController extends AppController {
                    'controller' => 'pitches',
                    'action' => 'index',
                    'player' => FALSE
-               )); 
+               ));
             }
         }
         
@@ -136,6 +238,42 @@ class UsersController extends AppController {
             )
         )));
         
+    }
+    
+    public function player_delete($id = null) {
+        $this->Pitch->id = $id;
+        if (!$this->Pitch->exists()) {
+            throw new NotFoundException(__('Cette réservation existe pas!'));
+        }
+        $this->request->onlyAllow('post', 'delete');
+        
+        $user = $this->User->find('first',array(
+            'conditions' => array(
+                'User.id' => $this->Auth->user('id')
+            )
+        ));
+        
+        $newUser = array(
+            'User' => array(
+                'id' => $this->Auth->user('id')
+            ),
+            'Pitch' => array(
+                'Pitch' => array()
+            )
+        );
+        
+        foreach( $user['Pitch'] as $pitch ){
+            if( $pitch['id'] != $id ){
+                array_push($newUser['Pitch']['Pitch'], $pitch['id']);
+            }
+        }
+        
+        if ($this->User->saveAssociated($newUser)) {
+            $this->Session->setFlash(__('Réservation effacée'), 'default', array('class' => 'alert alert-success'));
+            return $this->redirect(array('action' => 'bookings'));
+        }
+        $this->Session->setFlash(__('La réservation n a pas pu être effacée'), 'default', array('class' => 'alert alert-error'));
+        return $this->redirect(array('action' => 'bookings'));
     }
     
     public function login() {
@@ -149,7 +287,11 @@ class UsersController extends AppController {
         //$this->theme = 'Front';
         //$this->layout = 'login';
     }
-
+    
+    public function logout() {
+        return $this->redirect($this->Auth->logout());
+    }
+    
     public function admin_login() {
         $this->redirect(array('action' => 'login', 'admin' => false));
     }

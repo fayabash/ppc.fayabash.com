@@ -152,7 +152,8 @@ require_once('storage.php');
 Configure::write('Config.backendMenu', array(
     'Gestion du site' => array(
         'dropdown' => array(
-            'Tables' => array('controller' => 'pitches', 'action' => 'index')
+            'Tables' => array('controller' => 'pitches', 'action' => 'index'),
+            'Réservations' => array('controller' => 'pitches', 'action' => 'list')
         )
     ),
     'Medias' => array('controller' => 'attachments', 'action' => 'index', 'admin' => true),

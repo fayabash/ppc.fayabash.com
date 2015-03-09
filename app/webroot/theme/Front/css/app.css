@@ -1,10 +1,47 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 8 mars 2015, 23:37:16
-    Author     : dev
-*/
+/*  TYPO
+********************************/
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400);
+body,
+h1,h2,h3,h4 { font-family: 'Open Sans', sans-serif; color: #3754db; }
+h1,h2,h3,h4 { text-transform: uppercase; }
 
+/*  TYPO
+********************************/
+.jumbotron { background: #3754db; color:white; font-weight: 400; font-style: normal; }
+.jumbotron h1,
+.jumbotron h2,
+.jumbotron h3,
+.jumbotron h4 { color: white; }
+
+
+/*  BORDERS
+********************************/
+.navbar,
+.jumbotron,
+.container .jumbotron,
+.alert,
+.btn { border-radius: 0; -webkit-border-radius: 0; -moz-border-radius: 0; -ms-border-radius: 0; -o-border-radius: 0; }
+
+/*  BTN
+********************************/
+.btn-default,
+.btn-default:focus,
+.btn-default:hover,
+.btn-default:visited { background: white; color:#3754db;  }
+
+.btn-info,
+.btn-info:focus,
+.btn-info:hover,
+.btn-info:visited { background: #3754db; color:white;  border-color: white;  }
+
+/*  MENU
+********************************/
+.navbar-inverse { background: #3754db; color:white; font-weight: 400; font-style: normal; border:0; }
+.navbar-inverse .navbar-nav>li>a, .navbar-inverse .navbar-text { color:white; }
+.navbar-inverse .navbar-toggle { border-color: white; background: #3754db; }
+
+.navbar-inverse .navbar-toggle:hover { border-color: #3754db; background: white;  }
+
+.navbar-inverse .navbar-toggle:hover > .icon-bar,
+.navbar-inverse .navbar-toggle:focus > .icon-bar,
+.navbar-inverse .navbar-toggle:visited > .icon-bar { background: #3754db; }

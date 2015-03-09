@@ -18,6 +18,27 @@ class PitchesController extends AppController {
      */
     public $components = array('Paginator', 'Session');
     
+    public function admin_list(){
+        $pitches = $this->Pitch->find('all',array(
+            'conditions' => array(
+                'Pitch.end > NOW()',
+            ),
+            'order' => array(
+                'Pitch.start' => 'ASC',
+                'Pitch.title' => 'ASC',
+                'Pitch.max_user' => 'ASC'
+            )
+        ));
+        
+        foreach($pitches as $key => $pitch){
+            if( count($pitch['User']) < 1 ){
+                unset($pitches[$key]);
+            }
+        }
+        
+        $this->set('picthes',$pitches);
+    }
+    
     public function sumup(){
         
         if ($this->request->is('post')) {
@@ -34,7 +55,7 @@ class PitchesController extends AppController {
         
         // clean all after 2 days..
         $this->Pitch->deleteAll(array(
-            'Pitch.end > NOW() + INTERVAL 2 DAY'
+            'Pitch.end < NOW() + INTERVAL 2 DAY'
         ));
         
         $pitches = $this->Pitch->find('all',array(
@@ -146,6 +167,7 @@ class PitchesController extends AppController {
             throw new NotFoundException(__('Invalid pitch'));
         }
         if ($this->request->is('post') || $this->request->is('put')) {
+            //debug($this->request->data);
             if ($this->Pitch->saveAssociated($this->request->data)) {
                 $this->Session->setFlash(__('The pitch has been saved'), 'default', array('class' => 'alert alert-success'));
                 return $this->redirect(array('action' => 'index'));

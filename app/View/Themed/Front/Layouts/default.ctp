@@ -21,7 +21,7 @@
         
         <?php
         
-        $this->HtmlVersion->version = '0.0.1';
+        $this->HtmlVersion->version = '0.0.2';
         
         echo $this->Html->meta('icon');
 
@@ -49,6 +49,9 @@
                 </div>
             <![endif]-->
             
+            
+            <?php echo $this->element('header'); ?>
+            
             <div id="content" class="container" >
                 <?php
                 echo $this->Session->flash(); 
@@ -59,8 +62,14 @@
             
         </div>
         
+        <footer class="container">
+            <div class="copyrights">pour toutes questions, contactez : info@pingpongclub.ch</div>
+        </footer>
+        
         <?php
         echo $this->Html->script(array(
+            'vendor/jquery/jquery-1.11.2.min',
+            'vendor/twitter/bootstrap.min',
             'vendor.min',
             'app'
         ));

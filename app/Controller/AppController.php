@@ -44,6 +44,8 @@ class AppController extends Controller {
         }
         */
         
+        $this->set('is_logged', $this->Auth->user());
+        
         if (array_key_exists('admin', $this->request->params)) {
             $this->theme = 'Admin';
 
