@@ -153,6 +153,7 @@ Configure::write('Config.backendMenu', array(
     'Gestion du site' => array(
         'dropdown' => array(
             'Tables' => array('controller' => 'pitches', 'action' => 'index'),
+            'Nouvelle journée' => array('controller' => 'pitches', 'action' => 'create'),
             'Réservations' => array('controller' => 'pitches', 'action' => 'list')
         )
     ),

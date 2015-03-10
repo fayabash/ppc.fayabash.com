@@ -18,6 +18,71 @@ class PitchesController extends AppController {
      */
     public $components = array('Paginator', 'Session');
     
+    public function admin_create(){
+        if ($this->request->is('post')) {
+            $data = $this->request->data;
+            $start = $data['Pitch']['start'];
+            $end = $data['Pitch']['end'];
+            
+            $names = array('Table A', 'Table B', 'Table C');
+            $h = $start['hour'] - 1;
+            $m = '00';
+            $hp = $h + 1;
+            $mp = '30'; 
+            $pitches = array();
+            
+            
+            for( $i = 0; $i < 14; $i++ ){
+                
+                $endArray =  $start;
+                
+                if($i%2 == 0){
+                    $h++;
+                    $m = '00';
+                    $mp = '30';
+                }else{
+                    $hp++;
+                    $m = '30';
+                    $mp = '00';
+                }
+                
+                if( $hp == '24' ){
+                    $hp = '00';
+                    $endArray = $end;
+                }
+                
+                for($t = 0; $t < 3; $t++){
+                    $name = $names[$t%3];
+                    array_push($pitches, array('Pitch' => array(
+                        'title' => $name,
+                        'start' => array(
+                            'month' => $start['month'],
+                            'day' => $start['day'],
+                            'year' => $start['year'],
+                            'hour' => $h,
+                            'min' => $m,
+                        ),
+                        'end' => array(
+                            'month' => $endArray['month'],
+                            'day' => $endArray['day'],
+                            'year' => $endArray['year'],
+                            'hour' => $hp,
+                            'min' => $mp,
+                        ),
+                        'max_user' => 1,
+                        'description' => $data['Pitch']['description']
+                    )));
+                }
+            }
+            
+            //debug( $pitches );
+            
+            $this->Pitch->saveAll($pitches);
+            
+        }
+        
+    }
+    
     public function admin_list(){
         $pitches = $this->Pitch->find('all',array(
             'conditions' => array(
@@ -54,9 +119,9 @@ class PitchesController extends AppController {
     public function index(){
         
         // clean all after 2 days..
-        $this->Pitch->deleteAll(array(
+        /*$this->Pitch->deleteAll(array(
             'Pitch.end < NOW() + INTERVAL 2 DAY'
-        ));
+        ));*/
         
         $pitches = $this->Pitch->find('all',array(
             'conditions' => array(
