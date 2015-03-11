@@ -32,6 +32,15 @@
                 </li>
                 <li>
                     <?php
+                    echo $this->Html->link('CHANGER DE PASSWORD',array(
+                        'controller' => 'users',
+                        'action' => 'change_password',
+                        'player' => TRUE
+                    ));
+                    ?>
+                </li>
+                <li>
+                    <?php
                     echo $this->Html->link('LOGOUT',array(
                         'controller' => 'users',
                         'action' => 'logout',

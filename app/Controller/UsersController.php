@@ -1,6 +1,7 @@
 <?php
 
 App::uses('AppController', 'Controller');
+App::uses('CakeEmail', 'Network/Email');
 
 /**
  * Users Controller
@@ -291,12 +292,96 @@ class UsersController extends AppController {
         return $this->redirect(array('action' => 'bookings'));
     }
     
+    public function player_change_password(){
+        if ($this->request->is('post')) {
+            
+            $control = TRUE;
+            
+            $user = $this->request->data;
+            if( empty($user['User']['password']) ){
+                $this->Session->setFlash('Votre mot de passe est vide!', 'default', array('class' => 'alert alert-danger'));
+                $control = FALSE;
+            }
+            
+            if( $user['User']['password'] != $user['User']['password_confirm'] ){
+                $this->Session->setFlash('Les mots de passe ne correspondes pas!', 'default', array('class' => 'alert alert-danger'));
+                $control = FALSE;
+            }
+            
+            if( strlen($user['User']['password']) < 6 ){
+                $this->Session->setFlash('Votre mots de passe doit contenir au moins 6 caractères!', 'default', array('class' => 'alert alert-danger'));
+                $control = FALSE;
+            }
+            
+            if( $control ){
+                $user['User']['role_id'] = 2;
+                $user['User']['id'] = $this->Auth->user('id');
+                if ($this->User->save($user)) {
+                    $this->Session->setFlash('Votre mot de pass a bien été modifié!', 'default', array('class' => 'alert alert-success'));
+
+                    return $this->redirect(array('action' => 'bookings', 'player' => TRUE));
+                } else {
+                    $this->Session->setFlash('Essayez à nouveau', 'default', array('class' => 'alert alert-danger'));
+                }
+            }
+        }
+    }
+    
+    public function recover() {
+        
+        $message = "Saisissez votre email";
+        
+        if ($this->request->is('post')) {
+            
+            $email = $this->request->data['User']['email'];
+            $user = $this->User->find('first',array(
+                'conditions' => array(
+                    'User.email' => $email 
+                )
+            ));
+            
+            if( !empty($user) ){
+                
+                $pass = substr(md5($email.' youpi'), 0, 6);
+                $content = "Voici votre nouveau mot de passe:"."\n";
+                $content .= $pass."\n";
+                $content .= "\n"."cliquer ici pour vous connectez à nouveau"."\n";
+                $content .= Router::url(array('controller' => 'users', 'action' => 'change_password', 'player' => TRUE), TRUE)."\n";
+                $content .= "\n"."Merci et bien à vous! Le team ppc."."\n";
+                
+                $Email = new CakeEmail();
+                $Email->config('fayabash');
+                $Email->to($email);
+                $Email->subject('PPC Votre nouveau mot de passe!');
+                
+                if( $Email->send($content) ){
+                    $user['User']['password'] = $pass;
+                    unset($user['Pitch']);
+                    if( $this->User->save($user) ){
+                        $this->Session->setFlash('Un email vous a bien été envoyé avec toutes les instructions nécessaires!', 'default', array('class' => 'alert alert-success'));
+                        $this->redirect('/');
+                    }else{
+                        $this->Session->setFlash('Votre mot de passe automatique n\'a pu être changé, veuillez contacter notre équipe!', 'default', array('class' => 'alert alert-danger'));
+                    }
+                }else{
+                    $this->Session->setFlash('L\'email n\'a pu être envoyé, veuillez essayer à nouveau!', 'default', array('class' => 'alert alert-warning'));
+                }
+            }else{
+                $this->Session->setFlash('Cet email ne figure pas chez nous. Auriez-vous fait une faute de frape ?', 'default', array('class' => 'alert alert-warning'));
+            }
+            
+            
+        }
+        
+        $this->set('message', $message);
+    }
+    
     public function login() {
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
                 return $this->redirect($this->Auth->redirect());
             } else {
-                $this->Session->setFlash(__('Nom d\'user ou mot de passe invalide, réessayer'));
+                $this->Session->setFlash(__('Email ou mot de passe invalide, réessayer'), 'default', array('class' => 'alert alert-warning'));
             }
         }
         //$this->theme = 'Front';
@@ -432,6 +517,10 @@ class UsersController extends AppController {
      * @param string $id
      * @return void
      */
+    public function admin_password($id = null) {
+        $this->admin_edit($id);
+    }
+    
     public function admin_edit($id = null) {
         if (!$this->User->exists($id)) {
             throw new NotFoundException(__('Invalid user'));

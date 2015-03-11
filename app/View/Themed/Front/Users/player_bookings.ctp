@@ -18,7 +18,6 @@
                 echo ( $table['max_user'] > 1 )? 'Participation au tournoi' : 'Location d\'une table';
                 ?>
             </h4>
-            <p><?php echo $table['description']; ?></p>
             <p>
                 <?php
                 echo $this->Form->postLink('Annuler',array('action' => 'delete', $table['id']), array('class'=>'btn btn-danger btn-lg'), 'êtes vous sur de vouloir annuler votre réservation?');

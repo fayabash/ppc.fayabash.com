@@ -63,7 +63,7 @@
         </div>
         
         <footer class="container">
-            <div class="copyrights">pour toutes questions, contactez : info@pingpongclub.ch</div>
+            <div class="copyrights text-center" >Pour toutes questions, contactez : info@pingpongclub.ch</div>
         </footer>
         
         <?php

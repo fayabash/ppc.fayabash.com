@@ -27,7 +27,7 @@
             <td>
                 <?php
                 foreach( $pitch['User'] as $user ){
-                    echo $this->Html->tag('div', $user['email'].'/'. $user['username'],array('class' => 'tag'));
+                    echo $this->Html->tag('div', $user['firstname'].' '. $user['lastname'].' '.$user['username'],array('class' => 'tag'));
                     $count++;
                 }
                 ?>

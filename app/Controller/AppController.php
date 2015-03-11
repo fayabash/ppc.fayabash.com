@@ -37,7 +37,8 @@ class AppController extends Controller {
             'view',
             'add',
             'sumup',
-            'delete'
+            'delete',
+            'recover'
                 //'admin_add','admin_index','admin_edit','admin_delete'
         ));
         
