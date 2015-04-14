@@ -73,7 +73,7 @@
     
     <p></p>
     <h3>
-     Pour les personnes qui se présentent sur place sans réservations un table est dédié aux morts subites: le gagnant reste pendant que les challengers se suivent.
+        POUR LES PERSONNES QUI SE PRÉSENTENT SUR PLACE SANS RÉSERVATIONS UN TABLE EST DÉDIÉ AUX TOURNANTES.
     </h3>
     
 </section>
