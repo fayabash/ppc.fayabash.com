@@ -83,10 +83,28 @@ class PitchesController extends AppController {
         
     }
     
+    public function admin_print(){
+        
+        $pitches = $this->Pitch->find('all',array(
+            'conditions' => array(
+                'Pitch.end + INTERVAL 1 DAY > NOW()',
+            ),
+            'order' => array(
+                'Pitch.start' => 'ASC',
+                'Pitch.title' => 'ASC',
+                'Pitch.max_user' => 'ASC'
+            )
+        ));
+        
+        $this->set('pitches',$pitches);
+        
+        $this->layout = 'print';
+    }
+    
     public function admin_list(){
         $pitches = $this->Pitch->find('all',array(
             'conditions' => array(
-                'Pitch.end > NOW()',
+                'Pitch.end + INTERVAL 1 DAY  > NOW()',
             ),
             'order' => array(
                 'Pitch.start' => 'ASC',
@@ -101,7 +119,7 @@ class PitchesController extends AppController {
             }
         }
         
-        $this->set('picthes',$pitches);
+        $this->set('pitches',$pitches);
     }
     
     public function sumup(){

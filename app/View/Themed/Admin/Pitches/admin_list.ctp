@@ -11,13 +11,22 @@
 </style>
 
 <section>
-    <h2>Liste des Réservations:</h2>
+    <div class="text-right">
+        <?php
+        echo $this->Html->link('Print',array(
+            'action' => 'print'
+        ),array(
+            'class' => 'btn btn-primary'
+        ));
+        ?>
+    </div>
+    <h2>Liste des Réservations</h2>
     <table cellpadding="0" cellspacing="0" class="table">
         <?php
         
         $count = 0;
         
-        foreach( $picthes as $pitch ):
+        foreach( $pitches as $pitch ):
             $time = date('H:i', strtotime($pitch['Pitch']['start']));
         ?>
         <tr>
