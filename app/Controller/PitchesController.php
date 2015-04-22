@@ -105,6 +105,7 @@ class PitchesController extends AppController {
         $pitches = $this->Pitch->find('all',array(
             'conditions' => array(
                 'Pitch.end + INTERVAL 1 DAY  > NOW()',
+                'Pitch.start - INTERVAL 5 DAY  < NOW()',
             ),
             'order' => array(
                 'Pitch.start' => 'ASC',
